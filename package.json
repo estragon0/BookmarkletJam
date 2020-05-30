@@ -1,0 +1,16 @@
+{
+  "name": "BookmarkletJam",
+  "version": "0.1.0",
+  "description": "A game for Bookmarklet Jam #1.",
+  "main": "app.js",
+  "author": "estragon0 <glasnost0@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "eslint": "^7.1.0",
+    "jquery": "^3.5.1",
+    "matter-js": "^0.14.2",
+    "mousetrap": "^1.6.5"
+  },
+  "eslintConfig": ".eslintrc.json"
+}
