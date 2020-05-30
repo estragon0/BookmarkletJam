@@ -7,7 +7,7 @@
 
     const MAX_AREA = d.height() * d.width()/5;
     const MIN_AREA = 0 //d.height() * d.width()/1000;
-    const TARGET_URL = "//ganbaranai.net/cclicks/index.html"; //configurable
+    const TARGET_URL = "//estragon0.github.io/BookmarkletJam/index.html";
 
     $('a, button, img, td, video').filter(function() {
       return $(this).width() * $(this).height() < MAX_AREA &&
