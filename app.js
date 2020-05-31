@@ -22,14 +22,11 @@ $(function() {
     element: document.body,
     engine: engine,
     options: {
-      width: terrain.field.width - 10, // padding
+      width: terrain.field.width, // padding
       height: terrain.field.height,
       background: "transparent",
-      wireframeBackground: "transparent",
-      wireframes: false,
-      showBounds: true,
-      showIds: true,
-      hasBounds: true
+      //wireframeBackground: "transparent",
+      wireframes: false
       //background: 'rgb('0,0,0')'
     }
   });
