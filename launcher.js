@@ -7,17 +7,17 @@
 
     const MAX_AREA = d.height() * d.width()/5;
     const MIN_AREA = 0 //d.height() * d.width()/1000;
-    const TARGET_URL = "//ganbaranai.net/cclicks/index.html"; //configurable
+    const TARGET_URL = "//estragon0.github.io/BookmarkletJam/index.html";
 
     $('a, button, img, td, video').filter(function() {
       return $(this).width() * $(this).height() < MAX_AREA &&
              $(this).width() * $(this).height() > MIN_AREA;
-    }).addClass('gameified');
-    $('.gameified .gameified').removeClass('gameified');
+    }).addClass('cclicks-terrain');
+    $('.cclicks-terrain .cclicks-terrain').removeClass('cclicks-terrain');
 
-    if ($('.gameified').length >= MIN_TERRAIN) {
+    if ($('.cclicks-terrain').length >= MIN_TERRAIN) {
       let terrain_list = [];
-      $('.gameified').each(function() {
+      $('.cclicks-terrain').each(function() {
         terrain_list.push({
           y: $(this).offset().top,
           x: $(this).offset().left,
@@ -25,29 +25,38 @@
           width: $(this).width()
         });
       });
-      let output = {
+      const output = {
         "field": {
           "height": d.height(),
           "width": d.width()
         },
         "terrain": terrain_list
       };
-      $('body').wrapInner('<div class="cclick-grey" />');
+      $('body').wrapInner('<div class="cclicks-grey" />');
 
-      let game_frame = $('<iframe src="' +
-         TARGET_URL +
-        '?terrain=' +
-        btoa(JSON.stringify(output)) +
-      '" allowtransparency="true"></iframe>').css({
+      $('<form id="cclicks-data" target="cclicks-game" method="post" action="' +
+        TARGET_URL + '"> ' +
+        '<input type="hidden" value="' + btoa(JSON.stringify(output)) + '" />' +
+        '<input type="submit" style="display: none" />' +
+        '</form>').prependTo($('body'));
+      const game_frame = $('<iframe id="cclicks-game" allowtransparency="true"></iframe>').css({
         "position": "absolute",
+        "padding": "0px",
         "left": "0px",
         "top": "0px",
         "width": d.width(),
         "height": d.height(),
         "z-index": 1000
       });
-      $('.cclick-grey').fadeTo(2000, 0.2, () => game_frame.prependTo($('body')));
-      //window.open(TARGET_URL + "?terrain=" + btoa(JSON.stringify(output)));
+
+      $('.cclicks-grey').fadeTo(
+        2000,
+        0.2,
+        function() {
+          game_frame.prependTo($('body'));
+          $('#cclicks-data').submit();
+        }
+      );
     } else { //not enough terrain from first pass
       alert("Not enough terrain!");
     }
