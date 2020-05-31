@@ -34,12 +34,11 @@
       };
       $('body').wrapInner('<div class="cclicks-grey" />');
 
-      $('<form id="cclicks-data" target="cclicks-game" method="post" action="'
+      $('<form id="cclicks-data" target="cclicks-game" method="post" action="' +
         TARGET_URL + '"> ' +
         '<input type="hidden" value="' + btoa(JSON.stringify(output)) + '" />' +
         '<input type="submit" style="display: none" />' +
-        '</form>'
-      ).prependTo($('body'));
+        '</form>').prependTo($('body'));
       const game_frame = $('<iframe id="cclicks-game" allowtransparency="true"></iframe>').css({
         "position": "absolute",
         "padding": "0px",
