@@ -19,8 +19,8 @@
       let terrain_list = [];
       $('.cclicks-terrain').each(function() {
         terrain_list.push({
+          x: $(this).offset().left + ($(this).width() / 2),
           y: $(this).offset().top,
-          x: $(this).offset().left,
           height: $(this).height(),
           width: $(this).width()
         });
@@ -40,7 +40,9 @@
         btoa(JSON.stringify(output)) +
       '" allowtransparency="true"></iframe>').css({
         "position": "absolute",
+        "margin": "0px",
         "border": "0px",
+        "padding": "0px",
         "left": "0px",
         "top": "0px",
         "width": d.width(),
