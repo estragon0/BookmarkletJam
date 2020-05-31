@@ -6,7 +6,7 @@
     const MIN_TERRAIN = 12
 
     const MAX_AREA = d.height() * d.width()/5;
-    const MIN_AREA = 0 //d.height() * d.width()/1000;
+    const MIN_AREA = 100 //d.height() * d.width()/1000;
     const TARGET_URL = "//estragon0.github.io/BookmarkletJam/index.html";
 
     $('a, button, img, td, video').filter(function() {
@@ -20,7 +20,7 @@
       $('.cclicks-terrain').each(function() {
         terrain_list.push({
           x: $(this).offset().left + ($(this).width() / 2),
-          y: $(this).offset().top,
+          y: $(this).offset().top + ($(this).height() / 2),
           height: $(this).height(),
           width: $(this).width()
         });
@@ -34,7 +34,7 @@
       };
       $('body').wrapInner('<div class="cclicks-grey" />');
 
-      let game_frame = $('<iframe src="' +
+      let game_frame = $('<iframe id="cclicks-field" src="' +
          TARGET_URL +
         '?terrain=' +
         btoa(JSON.stringify(output)) +
@@ -48,8 +48,9 @@
         "width": d.width(),
         "height": d.height(),
         "z-index": 1000
-      });
-      $('.cclicks-grey').fadeTo(2000, 0.2, () => game_frame.prependTo($('body')));
+      }).css("display", "none").prependTo($('body'));
+      $('.cclicks-grey').fadeTo(2000, 0.2);
+      $('#cclicks-field').fadeIn(2000);
       //window.open(TARGET_URL + "?terrain=" + btoa(JSON.stringify(output)));
     } else { //not enough terrain from first pass
       alert("Not enough terrain!");
