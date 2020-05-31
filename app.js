@@ -36,8 +36,8 @@ $(function() {
     isStatic: true,
     collisionFilter: {
       group: 1,
-      category: 2,
-      mask: 15
+      category: 0x0010,
+      mask: 0x1111
     }
   }
   Composite.add(borders, [
@@ -51,7 +51,17 @@ $(function() {
   let terrain_bodies = Composite.create();
   let mc = MouseConstraint.create(
     engine,
-    {mouse: Mouse.create(render.canvas)}
+    {
+      mouse: Mouse.create(render.canvas),
+      collisionFilter: {
+        mask: 0x0101
+      },
+      constraint: {
+        render: {
+          visible: false
+        }
+      }
+    }
   );
   Composite.add(terrain_bodies, mc);
   terrain.terrain.forEach(function (elem) {
@@ -60,18 +70,18 @@ $(function() {
       restitution: 0.5,
       collisionFilter: {
         group: 1,
-        category: 4,
-        mask: 7
+        category: 0x0100,
+        mask: 0x0111
       }
     });
     Composite.add(terrain_bodies, rect);
   });
   let prey_loc = terrain.terrain[Math.floor(Math.random()*terrain.terrain.length)];
-  let prey = Bodies.circle(prey_loc.x, prey_loc.y, 10, {
+  let prey = Bodies.circle(prey_loc.x, prey_loc.y, 5, {
     collisionFilter: {
       group: 0,
-      category: 8,
-      mask: 3
+      category: 0x1000,
+      mask: 0x0011
     }
   }); // sprite
   World.add(engine.world, prey);
