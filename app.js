@@ -22,8 +22,8 @@ $(function() {
     element: document.body,
     engine: engine,
     options: {
-      width: terrain.field.width - 5 ,
-      height: terrain.field.height - 5,
+      width: terrain.field.width - 25,
+      height: terrain.field.height - 25,
       background: "transparent",
       wireframeBackground: "transparent",
       wireframes: false
@@ -31,14 +31,14 @@ $(function() {
   });
   engine.world.gravity.y = 0;
 
-  let borders = Composite.create();
-  Composite.add(borders, [
+  //let borders = Composite.create();
+  World.add(engine.world, [
     Bodies.rectangle(0, 0, render.canvas.width, 5, {isStatic: true}),
     Bodies.rectangle(0, 0, 5, render.canvas.height, {isStatic: true}),
     Bodies.rectangle(0, render.canvas.height, render.canvas.width, 5, {isStatic: true}),
     Bodies.rectangle(render.canvas.width, 0, 5, render.canvas.height, {isStatic: true})
   ]);
-  World.add(engine.world, borders);
+  //World.add(engine.world, borders);
 
   let terrain_bodies = Composite.create();
   Events.on(terrain_bodies, "beforeAdd", function(elem) {
