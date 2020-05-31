@@ -33,10 +33,10 @@ $(function() {
 
   //let borders = Composite.create();
   World.add(engine.world, [
-    Bodies.rectangle(0, 0, render.canvas.width, 5, {isStatic: true}),
-    Bodies.rectangle(0, 0, 5, render.canvas.height, {isStatic: true}),
-    Bodies.rectangle(0, render.canvas.height, render.canvas.width, 5, {isStatic: true}),
-    Bodies.rectangle(render.canvas.width, 0, 5, render.canvas.height, {isStatic: true})
+    Bodies.rectangle(render.canvas.width/2, 0, render.canvas.width, 5, {isStatic: true}),
+    Bodies.rectangle(0, render.canvas.height/2, 5, render.canvas.height, {isStatic: true}),
+    Bodies.rectangle(render.canvas.width/2, render.canvas.height, render.canvas.width, 5, {isStatic: true}),
+    Bodies.rectangle(render.canvas.width, render.canvas.height/2, 5, render.canvas.height, {isStatic: true})
   ]);
   //World.add(engine.world, borders);
 
