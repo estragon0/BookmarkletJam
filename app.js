@@ -49,8 +49,13 @@ $(function() {
   World.add(engine.world, borders);
 
   let terrain_bodies = Composite.create();
-  Events.on(terrain_bodies, "beforeAdd", function(elem) {
-    Body.set(elem, {
+  let mc = MouseConstraint.create(
+    engine,
+    {mouse: Mouse.create(render.canvas)}
+  );
+  Composite.add(terrain_bodies, mc);
+  terrain.terrain.forEach(function (elem) {
+    let rect = Bodies.rectangle(elem.x, elem.y, elem.width, elem.height, {
       frictionAir: 0.1,
       restitution: 0.5,
       collisionFilter: {
@@ -58,15 +63,7 @@ $(function() {
         category: 4,
         mask: 7
       }
-    })
-  });
-  let mc = MouseConstraint.create(
-    engine,
-    {mouse: Mouse.create(render.canvas)}
-  );
-  Composite.add(terrain_bodies, mc);
-  terrain.terrain.forEach(function (elem) {
-    let rect = Bodies.rectangle(elem.x, elem.y, elem.width, elem.height);
+    });
     Composite.add(terrain_bodies, rect);
   });
   let prey_loc = terrain.terrain[Math.floor(Math.random()*terrain.terrain.length)];
