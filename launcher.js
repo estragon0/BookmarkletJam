@@ -40,7 +40,7 @@
         btoa(JSON.stringify(output)) +
       '" allowtransparency="true"></iframe>').css({
         "position": "absolute",
-        "padding": "0px",
+        "border": "0px",
         "left": "0px",
         "top": "0px",
         "width": d.width(),

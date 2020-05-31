@@ -22,25 +22,21 @@ $(function() {
     element: document.body,
     engine: engine,
     options: {
-      width: terrain.field.width - 10, // padding
-      height: terrain.field.height,
+      width: terrain.field.width - 5 ,
+      height: terrain.field.height - 5,
       background: "transparent",
       wireframeBackground: "transparent",
-      wireframes: false,
-      showBounds: true,
-      showIds: true,
-      hasBounds: true
-      //background: 'rgb('0,0,0')'
+      wireframes: false
     }
   });
   engine.world.gravity.y = 0;
 
   let borders = Composite.create();
   Composite.add(borders, [
-    Bodies.rectangle(0, 0, terrain.field.width, 5, {isStatic: true}),
-    Bodies.rectangle(0, 0, 5, terrain.field.height, {isStatic: true}),
-    Bodies.rectangle(0, terrain.field.height, terrain.field.width, 5, {isStatic: true}),
-    Bodies.rectangle(terrain.field.width, 0, 5, terrain.field.height, {isStatic: true})
+    Bodies.rectangle(0, 0, render.canvas.width, 5, {isStatic: true}),
+    Bodies.rectangle(0, 0, 5, render.canvas.height, {isStatic: true}),
+    Bodies.rectangle(0, render.canvas.height, render.canvas.width, 5, {isStatic: true}),
+    Bodies.rectangle(render.canvas.width, 0, 5, render.canvas.height, {isStatic: true})
   ]);
   World.add(engine.world, borders);
 
