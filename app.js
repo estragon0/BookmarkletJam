@@ -1,6 +1,7 @@
 /* global Matter */
 /* eslint max-lines-per-function: "off" */
 /* eslint max-len: "warn" */
+/* eslint object-shorthand: "off" */
 
 $(function() {
   const {
@@ -8,8 +9,8 @@ $(function() {
     Render,
     World,
     Bodies,
-    Body,
     Composite,
+    Constraint,
     Events,
     Mouse,
     MouseConstraint
@@ -54,7 +55,7 @@ $(function() {
     {
       mouse: Mouse.create(render.canvas),
       collisionFilter: {
-        mask: 0x0101
+        mask: 0x11111
       },
       constraint: {
         render: {
@@ -66,7 +67,7 @@ $(function() {
   Composite.add(terrain_bodies, mc);
   terrain.terrain.forEach(function (elem) {
     let rect = Bodies.rectangle(elem.x, elem.y, elem.width, elem.height, {
-      frictionAir: 0.1,
+      frictionAir: 0.05, //lower?
       restitution: 0.5,
       collisionFilter: {
         group: 1,
@@ -76,16 +77,55 @@ $(function() {
     });
     Composite.add(terrain_bodies, rect);
   });
-  let prey_loc = terrain.terrain[Math.floor(Math.random()*terrain.terrain.length)];
-  let prey = Bodies.circle(prey_loc.x, prey_loc.y, 5, {
+
+  function selectNewBody() {
+    let bodies = Composite.allBodies(terrain_bodies);
+
+    return bodies[Math.floor(Math.random()*bodies.length)];
+  }
+
+  let prey_loc = selectNewBody().position;
+  //let prey_loc = terrain.terrain[Math.floor(Math.random()*terrain.terrain.length)];
+  let prey_body = Bodies.circle(prey_loc.x, prey_loc.y, 5, {
     collisionFilter: {
       group: 0,
       category: 0x1000,
       mask: 0x0011
     }
   }); // sprite
+  let prey_sensor = Bodies.circle(prey_loc.x, prey_loc.y, 5, {
+    isSensor: true,
+    collisionFilter: {
+      group: 0,
+      category: 0x10000,
+      mask: 0x0101
+    }
+  })
+  let prey_constraint = Constraint.create({
+    bodyA: prey_body,
+    bodyB: prey_sensor,
+    pointB: prey_body.position,
+    stiffness: 1,
+    length: 0
+  })
+  let prey = Composite.create();
+  Composite.add(prey, [
+    prey_body,
+    prey_sensor,
+    prey_constraint
+  ]);
   World.add(engine.world, prey);
   World.add(engine.world, terrain_bodies);
+
+  Events.on(engine, "collisionEnd", function() {
+    if (event.pairs) {
+      event.pairs.forEach(function(p) {
+        if (p.bodyA === prey_sensor || p.bodyB === prey_sensor) {
+          alert("test");
+        }
+      })
+    }
+  })
 
   Engine.run(engine);
   Render.run(render);

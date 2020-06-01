@@ -1,4 +1,5 @@
 /* eslint max-lines-per-function: "off" */
+/* eslint no-extra-parens: "warn" */
 
 (() => {
   function sendTerrain() {
@@ -34,7 +35,7 @@
       };
       $('body').wrapInner('<div class="cclicks-grey" />');
 
-      let game_frame = $('<iframe id="cclicks-field" src="' +
+      $('<iframe id="cclicks-field" src="' +
          TARGET_URL +
         '?terrain=' +
         btoa(JSON.stringify(output)) +
